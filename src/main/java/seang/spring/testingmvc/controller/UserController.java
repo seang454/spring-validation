@@ -1,5 +1,6 @@
 package seang.spring.testingmvc.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    ResponseEntity<UserResponseDto> createUser(@RequestBody UserCreateDto userCreateDto) {
+    ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserCreateDto userCreateDto) {
         UserResponseDto userResponseDto = userService.saveUser(userCreateDto);
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
@@ -48,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PatchMapping("/{uuid}")
-    ResponseEntity<UserResponseDto> updateUser(@PathVariable String uuid,@RequestBody UserUpdateDto userUpdateDto) {
+    ResponseEntity<UserResponseDto> updateUser(@PathVariable String uuid,@Valid @RequestBody UserUpdateDto userUpdateDto) {
         UserResponseDto userResponseDto = userService.updateUserAllColum(uuid,userUpdateDto);
         return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
     }
