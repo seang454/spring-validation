@@ -10,9 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import seang.spring.testingmvc.apiResponse.ApiResponse;
 import seang.spring.testingmvc.model.UserService;
-import seang.spring.testingmvc.model.dto.UserCreateDto;
-import seang.spring.testingmvc.model.dto.UserResponseDto;
-import seang.spring.testingmvc.model.dto.UserUpdateDto;
+import seang.spring.testingmvc.model.dto.user.UserCreateDto;
+import seang.spring.testingmvc.model.dto.user.UserResponseDto;
+import seang.spring.testingmvc.model.dto.user.UserUpdateDto;
 import seang.spring.testingmvc.model.entity.Users;
 import seang.spring.testingmvc.model.pojo.Product;
 
@@ -44,7 +44,6 @@ public class UserController {
     }
     @DeleteMapping("/{uuid}")
     ResponseEntity<Users> deleteUserByUuid(@PathVariable String uuid) {
-        log.info("Deleting user: " + uuid);
         userService.deleteUserByUuid(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }

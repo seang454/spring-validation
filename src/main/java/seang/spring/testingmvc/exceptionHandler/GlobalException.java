@@ -54,6 +54,14 @@ public class GlobalException {
                     phone = causeMessage.substring(startIndex, endIndex);
                 }
                 errorMessage = "The phone " + phone + " is already registered in user.";
+            }else if(causeMessage.contains("roles_pk") && causeMessage.contains("name")) {
+                String roleName = "";
+                int startIndex = causeMessage.indexOf("Key (name)=(") + "Key (name)=(".length();
+                int endIndex = causeMessage.indexOf(")", startIndex);
+                if (endIndex != -1) {
+                    roleName = causeMessage.substring(startIndex, endIndex);
+                }
+                errorMessage = "The role " + roleName + " is already registered in user.";
             }
         }
         body.put("message", errorMessage);

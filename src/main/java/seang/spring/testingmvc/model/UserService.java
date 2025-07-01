@@ -3,17 +3,20 @@ package seang.spring.testingmvc.model;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import seang.spring.testingmvc.Mapper.UserMapper;
-import seang.spring.testingmvc.model.dto.UserCreateDto;
-import seang.spring.testingmvc.model.dto.UserResponseDto;
-import seang.spring.testingmvc.model.dto.UserUpdateDto;
+import seang.spring.testingmvc.model.dto.user.UserCreateDto;
+import seang.spring.testingmvc.model.dto.user.UserResponseDto;
+import seang.spring.testingmvc.model.dto.user.UserUpdateDto;
+import seang.spring.testingmvc.model.entity.RoleId;
+import seang.spring.testingmvc.model.entity.Roles;
+import seang.spring.testingmvc.model.entity.UserRoles;
 import seang.spring.testingmvc.model.entity.Users;
+import seang.spring.testingmvc.model.repository.RoleRepository;
 import seang.spring.testingmvc.model.repository.UserRepository;
+import seang.spring.testingmvc.model.repository.UserRoleRepository;
 import seang.spring.testingmvc.model.security.HashUtil;
 
 import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +27,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     final UserRepository userRepository;
+    final UserRoleRepository userRoleRepository;
+    final RoleRepository roleRepository;
     public UserResponseDto saveUser(UserCreateDto userCreateDto) {
         String hashing = HashUtil.hashWithSalt(userCreateDto.password());
 
+        Roles role = roleRepository.findAll().stream().filter(r ->r.getName().toLowerCase().equals(userCreateDto.roleName().toLowerCase()) ).findFirst().orElse(null);
         Users user = UserMapper.MapFromCreateUserResponseToUsers(hashing,userCreateDto);
         userRepository.save(user);
+
+        Users insertedUser = userRepository.findByUuid(user.getUuid()).get();
+        assert role != null;
+        RoleId roleId = new RoleId(insertedUser.getId(),role.getId());
+        UserRoles userRole = new UserRoles(roleId,user,role);
+        userRoleRepository.save(userRole);
         Optional<Users> savedUser = userRepository.findByUuid(user.getUuid());
         return UserMapper.MapFromUserToUserResponseDto(savedUser.get());
     }
@@ -43,7 +55,6 @@ public class UserService {
     }
 
     public void deleteUserByUuid(String uuid) {
-        log.info("Deleting user in service : " + uuid);
         userRepository.deleteByUuid(uuid);
     }
 

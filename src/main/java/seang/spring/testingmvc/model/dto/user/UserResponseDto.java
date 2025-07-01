@@ -1,4 +1,4 @@
-package seang.spring.testingmvc.model.dto;
+package seang.spring.testingmvc.model.dto.user;
 
 import lombok.Builder;
 

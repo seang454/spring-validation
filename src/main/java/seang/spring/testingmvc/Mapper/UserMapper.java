@@ -1,12 +1,10 @@
 package seang.spring.testingmvc.Mapper;
 
-import seang.spring.testingmvc.model.dto.UserCreateDto;
-import seang.spring.testingmvc.model.dto.UserResponseDto;
-import seang.spring.testingmvc.model.dto.UserUpdateDto;
+import seang.spring.testingmvc.model.dto.user.UserCreateDto;
+import seang.spring.testingmvc.model.dto.user.UserResponseDto;
 import seang.spring.testingmvc.model.entity.Users;
 
 import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
