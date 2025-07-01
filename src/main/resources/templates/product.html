@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+</head>
+<body>
+<div th:each="product : ${products}">
+        <h1 th:text="${product.id}">student id</h1>
+        <h1 th:text="${product.name}">student name</h1>
+        <h1 th:text="${product.gender}">student gender</h1>
+        <h1 th:text="${product.surname}">student surname</h1>
+        <h1 th:text="${product.phone}">student phone</h1>
+</div>
+</body>
+</html>
