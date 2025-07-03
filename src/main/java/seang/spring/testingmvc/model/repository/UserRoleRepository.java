@@ -6,4 +6,5 @@ import seang.spring.testingmvc.model.entity.UserRoles;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRoles, Long> {
+
 }

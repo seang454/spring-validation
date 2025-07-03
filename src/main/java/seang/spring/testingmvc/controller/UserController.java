@@ -68,6 +68,9 @@ public class UserController {
         model.addAttribute("products", productList); // ✅ Use plural name
         return "products";
     }
-
-
+    @GetMapping("{uuid}")
+    public ResponseEntity<UserResponseDto> getUserByUuid(@PathVariable String uuid) {
+        UserResponseDto userResponseDto = userService.getUserByUuid(uuid);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.FOUND);
+    }
 }

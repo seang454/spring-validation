@@ -46,4 +46,10 @@ public class RoleController {
         RoleResponseDto roleResponseDto = roleService.updateRole(uuid,roleCreateDto);
         return new ResponseEntity<>(roleResponseDto,HttpStatus.OK);
     }
+    @GetMapping("{uuid}")
+    public ResponseEntity<RoleResponseDto> getRoleByUuid(@PathVariable String uuid) {
+        RoleResponseDto roleResponseDto = roleService.getRoleByUuid(uuid);
+        return new ResponseEntity<>(roleResponseDto,HttpStatus.FOUND);
+    }
+
 }

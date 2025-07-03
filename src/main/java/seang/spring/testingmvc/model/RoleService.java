@@ -11,6 +11,7 @@ import seang.spring.testingmvc.model.repository.RoleRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,5 +41,9 @@ public class RoleService {
     public void deleteRole(String uuid){
         Roles roles = roleRepository.findRoleByUuid(uuid).get();
         roleRepository.delete(roles);
+    }
+    public RoleResponseDto getRoleByUuid(String uuid){
+        Roles roles = roleRepository.findRoleByUuid(uuid).orElseThrow(()-> new RuntimeException("role not found"));
+        return RoleMapper.mapFromRoleToRoleResponseDto(roles);
     }
 }

@@ -57,7 +57,6 @@ public class UserService {
     public void deleteUserByUuid(String uuid) {
         userRepository.deleteByUuid(uuid);
     }
-
     public UserResponseDto updateUserAllColum(String uuid, UserUpdateDto userUpdateDto) {
         Users users = userRepository.findAll().stream().filter(user1 -> user1.getUuid().equals(uuid)).findFirst().get();
         users.setName(userUpdateDto.name());
@@ -68,6 +67,10 @@ public class UserService {
         userRepository.save(users);
         Users updatedUser = userRepository.findAll().stream().filter(user1 -> user1.getUuid().equals(user1.getUuid())).findFirst().get();
         return UserMapper.MapFromUserToUserResponseDto(users);
-
+    }
+    public UserResponseDto getUserByUuid(String uuid){
+        Users user = userRepository.findByUuid(uuid)
+                .orElseThrow(() -> new RuntimeException("User not found with UUID: " + uuid));
+        return UserMapper.MapFromUserToUserResponseDto(user);
     }
 }
