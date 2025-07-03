@@ -21,12 +21,12 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
     final UserService userService;
 
-    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserResponseDto>>> findAll() {
         List<UserResponseDto> users = userService.getAllUsers();
         ApiResponse<List<UserResponseDto>> apiResponse = new ApiResponse<>(
@@ -37,7 +37,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
-    @PostMapping("/save")
+    @PostMapping
     ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserCreateDto userCreateDto) {
         UserResponseDto userResponseDto = userService.saveUser(userCreateDto);
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);

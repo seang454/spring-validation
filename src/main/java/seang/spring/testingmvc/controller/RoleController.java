@@ -15,12 +15,12 @@ import seang.spring.testingmvc.model.entity.Users;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/role")
+@RequestMapping("api/v1/roles")
 @RequiredArgsConstructor
 public class RoleController {
     private final RoleService roleService;
 
-    @GetMapping(value = "/getAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<RoleResponseDto>>> findAll() {
         List<RoleResponseDto> roles = roleService.getAllRoles();
         ApiResponse<List<RoleResponseDto>> apiResponse = new ApiResponse<>(
@@ -31,7 +31,7 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
-    @PostMapping("/save")
+    @PostMapping
     ResponseEntity<RoleResponseDto> createUser(@Valid @RequestBody RoleCreateDto roleCreateDto) {
         RoleResponseDto roleResponseDto = roleService.saveRole(roleCreateDto);
         return new ResponseEntity<>(roleResponseDto, HttpStatus.CREATED);
@@ -46,7 +46,7 @@ public class RoleController {
         RoleResponseDto roleResponseDto = roleService.updateRole(uuid,roleCreateDto);
         return new ResponseEntity<>(roleResponseDto,HttpStatus.OK);
     }
-    @GetMapping("{uuid}")
+    @GetMapping("/{uuid}")
     public ResponseEntity<RoleResponseDto> getRoleByUuid(@PathVariable String uuid) {
         RoleResponseDto roleResponseDto = roleService.getRoleByUuid(uuid);
         return new ResponseEntity<>(roleResponseDto,HttpStatus.FOUND);
