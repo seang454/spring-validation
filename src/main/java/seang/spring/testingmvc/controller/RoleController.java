@@ -39,7 +39,7 @@ public class RoleController {
     @DeleteMapping("/{uuid}")
     ResponseEntity<Users> deleteUserByUuid(@PathVariable String uuid) {
         roleService.deleteRole(uuid);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @PatchMapping("/{uuid}")
     ResponseEntity<RoleResponseDto> updateUser(@PathVariable String uuid,@Valid @RequestBody RoleCreateDto roleCreateDto) {

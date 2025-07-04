@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     final UserService userService;
-
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<List<UserResponseDto>>> findAll() {
         List<UserResponseDto> users = userService.getAllUsers();
@@ -45,7 +44,7 @@ public class UserController {
     @DeleteMapping("/{uuid}")
     ResponseEntity<Users> deleteUserByUuid(@PathVariable String uuid) {
         userService.deleteUserByUuid(uuid);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PatchMapping("/{uuid}")
     ResponseEntity<UserResponseDto> updateUser(@PathVariable String uuid,@Valid @RequestBody UserUpdateDto userUpdateDto) {
